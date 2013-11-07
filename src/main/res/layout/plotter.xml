@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/btstate"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/disabled"
+            android:id="@+id/txtBTStatePlotter"
+            android:textColor="@color/RED" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/serverstate"
+            android:id="@+id/textView5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/disconnected"
+            android:id="@+id/txtServerStatePlotter"
+            android:textColor="@color/RED" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="0dp"
+        android:layout_weight="0.75" android:id="@+id/linearLayout4"
+        android:layout_width="match_parent">
+        <TextView android:id="@+id/textView1" android:text="TextView"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"></TextView>
+    </LinearLayout>
+    <LinearLayout android:layout_height="0dp"
+        android:layout_weight="0.1" android:id="@+id/linearLayout1"
+        android:layout_width="match_parent" android:orientation="vertical">
+
+        <LinearLayout android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2" android:layout_width="match_parent">
+            <TextView android:id="@+id/textView2" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content" android:text="@string/amp"></TextView>
+            <EditText android:layout_weight="1" android:id="@+id/txtAmp"
+                android:layout_height="wrap_content" android:layout_width="wrap_content">
+                <requestFocus></requestFocus>
+            </EditText>
+            <TextView android:id="@+id/textView3" android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content" android:text="@string/period"></TextView>
+            <EditText android:layout_weight="1" android:id="@+id/txtPeriod"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"></EditText>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button android:id="@+id/btnUpdate" android:layout_height="0dp"
+        android:layout_weight="0.1" android:layout_width="match_parent"
+        android:text="@string/update"
+        android:onClick="updatePlotter"></Button>
+
+</LinearLayout>

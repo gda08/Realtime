@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/enable_bt" android:title="Enable BT" />
+    <item android:id="@+id/disable_bt" android:title="Disable BT" />
+    <item android:id="@+id/set_discoverable" android:title="Set discovarable"/>
+    <item android:id="@+id/start_scan" android:title="Scan devices" />
+    <item android:id="@+id/connect_to_server" android:title="Connect to Server" />
+
+</menu>

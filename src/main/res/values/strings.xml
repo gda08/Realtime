@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BallAndBeam</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="enbbt">Enable BT</string>
+    <string name="disbt">Disable BT</string>
+    <string name="discvrbl">Make discoverable</string>
+    <string name="devname">Device name:</string>
+    <string name="discoverable">Discoverable:</string>
+    <string name="paireddevices">Paired devices:</string>
+    <string name="scandevices">Scan devices</string>
+    <string name="discovereddevs">Discovered devices:</string>
+    <string name="send">Send</string>
+    <string name="pi">PI:</string>
+    <string name="pid">PID:</string>
+    <string name="k">K:</string>
+    <string name="h">H:</string>
+    <string name="serverstate">Server state:</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connect2sever">Conect to server</string>
+    <string name="ti">Ti:</string>
+    <string name="tr">Tr:</string>
+    <string name="beta">Beta:</string>
+    <string name="update">Update</string>
+    <color name="ORAGNE">#ffff8e35</color>
+    <color name="GREEN">#00FF00</color>
+    <color name="RED">#FF0000</color>
+    <string name="td">Td:</string>
+    <string name="n">N:</string>
+    <string name="squarewave">Square wave:</string>
+    <string name="amp">Amplitude:</string>
+    <string name="period">Period:</string>
+    <string name="manual">Manual:</string>
+    <string name="btstate">Bluetooth state:</string>
+    <string name="disabled">Disabled</string>
+    <string name="no">No</string>
+
+</resources>

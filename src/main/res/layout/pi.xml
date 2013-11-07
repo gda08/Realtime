@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/btstate"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/disabled"
+            android:id="@+id/txtBTStatePi"
+            android:textColor="@color/RED" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/serverstate"
+            android:id="@+id/textView5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/disconnected"
+            android:id="@+id/txtServerStatePi"
+            android:textColor="@color/RED" />
+    </LinearLayout>
+    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
+        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp" android:text="@string/k"></TextView>
+        <EditText android:layout_weight="0.5" android:id="@+id/txtPiK"
+            android:layout_height="wrap_content" android:layout_width="0dp"></EditText>
+    </LinearLayout>
+
+    <Button android:id="@+id/btnPiUpdate" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:text="@string/update"
+        android:onClick="updatePI"></Button>
+</LinearLayout>
