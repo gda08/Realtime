@@ -1,4 +1,4 @@
-package com.realtime.project;
+package com.realtime.project.gui;
 
 import android.os.Bundle;
 import android.view.View;

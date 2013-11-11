@@ -1,39 +1,39 @@
-package com.realtime.project;
+package com.realtime.project.gui;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class PIDParams extends AbstractActivity {
+public class PIParams extends AbstractActivity {
 
-    private TextView txtK, txtServerState, txtBTState;
+    private TextView txtK, txtServerState, txtBTState;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pid);
+        setContentView(R.layout.pi);
         initGUI();
     }
 
     private void initGUI() {
-        txtServerState = (TextView)findViewById(R.id.txtServerStatePid);
-        txtBTState = (TextView)findViewById(R.id.txtBTStatePid);
-        txtK = (TextView)findViewById(R.id.txtPidK);
+        txtServerState = (TextView)findViewById(R.id.txtServerStatePi);
+        txtBTState = (TextView)findViewById(R.id.txtBTStatePi);
+        txtK = (TextView)findViewById(R.id.txtPiK);
 
         super.setBtStateTextView(txtBTState);
         super.setServerTextView(txtServerState);
 
-        ((Button)findViewById(R.id.btnPidUpdate)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.btnPiUpdate)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updatePID();
+                updatePI();
             }
         });
     }
 
-    public void updatePID() {
-        String s = "PID" + ","
+    public void updatePI() {
+        String s = "PI" + ","
                 + txtK.getText().toString() + " ";
         sendToService(Str.SEND_TO_SERVER, s);
     }

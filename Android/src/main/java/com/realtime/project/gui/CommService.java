@@ -1,4 +1,4 @@
-package com.realtime.project;
+package com.realtime.project.gui;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
