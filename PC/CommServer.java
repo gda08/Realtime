@@ -10,7 +10,7 @@ import javax.microedition.io.StreamConnection;
 public class CommServer extends Thread{
 	private StreamConnection mConnection;
 	private static final int EXIT_CMD = -1;
-	private BeamAndBallRegul regul;
+	private RegulProxy regul;
 	private ReferenceGenerator ref;
 	// private ArrayList<DBContainer> PIDParameters = new
 	// ArrayList<DBContainer>();
@@ -19,7 +19,7 @@ public class CommServer extends Thread{
 	PIDParameters pidParameters;
 	PIParameters piParameters;
 
-	public CommServer(StreamConnection connection, BeamAndBallRegul regul) {
+	public CommServer(StreamConnection connection, RegulProxy regul) {
 		mConnection = connection;
 		this.regul = regul;
 		ref = new ReferenceGenrerator(0);
