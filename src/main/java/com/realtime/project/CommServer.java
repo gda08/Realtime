@@ -7,10 +7,11 @@ import java.util.ArrayList;
 
 import javax.microedition.io.StreamConnection;
 
-public class CommServer {
+public class CommServer extends Thread{
 	private StreamConnection mConnection;
 	private static final int EXIT_CMD = -1;
 	private BeamAndBallRegul regul;
+	private ReferenceGenerator ref;
 	// private ArrayList<DBContainer> PIDParameters = new
 	// ArrayList<DBContainer>();
 	// private ArrayList<DBContainer> PIParameters = new
@@ -21,6 +22,7 @@ public class CommServer {
 	public CommServer(StreamConnection connection, BeamAndBallRegul regul) {
 		mConnection = connection;
 		this.regul = regul;
+		ref = new ReferenceGenrerator(0);
 		pidParameters = new PIDParameters();
 		piParameters = new PIParameters();
 	}
@@ -46,10 +48,13 @@ public class CommServer {
 					String spTemp[] = sp[i + 1].split(" ");
 					if (sp[0].compareTo("PID") == 0) {
 						updatePID(spTemp);
-					} else if (sp[0].compareTo("PI") == 0) {
+					}else if (sp[0].compareTo("PI") == 0) {
 						updatePI(spTemp);
+					}else if (sp[0].compareTo("POS") == 0){
+						ref.setRef(sp[1]);
 					}
 				}
+				sleep(10);
 				// processCommand(command);
 			}
 		} catch (Exception e) {
