@@ -1,30 +1,52 @@
-package com.realtime.project;
+package PC;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.microedition.io.StreamConnection;
 
+import SimEnvironment.AnalogSink;
+import SimEnvironment.AnalogSource;
+
 public class CommServer extends Thread{
 	private StreamConnection mConnection;
 	private static final int EXIT_CMD = -1;
-	private RegulProxy regul;
-	private ReferenceGenerator ref;
-	// private ArrayList<DBContainer> PIDParameters = new
+//	private ReferenceGenerator ref;
+	private AnalogSource analogInPos;
+    private AnalogSource analogInAng;
+    private AnalogSink analogOut;
+    private AnalogSink analogRef;
+    private InputStream inputStream;
+    private OutputStream outputStream;
+    private double regulSignal;
+    // private ArrayList<DBContainer> PIDParameters = new
 	// ArrayList<DBContainer>();
 	// private ArrayList<DBContainer> PIParameters = new
 	// ArrayList<DBContainer>();
-	PIDParameters pidParameters;
-	PIParameters piParameters;
+//	PIDParameters pidParameters;
+//	PIParameters piParameters;
 
-	public CommServer(StreamConnection connection, RegulProxy regul) {
+	public CommServer(StreamConnection connection, BeamAndBall beam) {
+		analogInPos = beam.getSource(0);
+        analogInAng = beam.getSource(1);
+        analogOut = beam.getSink(0);
+        analogRef = beam.getSink(1);
 		mConnection = connection;
-		this.regul = regul;
-		ref = new ReferenceGenrerator(0);
-		pidParameters = new PIDParameters();
-		piParameters = new PIParameters();
+//		pidParameters = new PIDParameters();
+//		piParameters = new PIParameters();
+		regulSignal = 0;
+		try {
+			inputStream = mConnection.openInputStream();
+			outputStream = mConnection.openOutputStream();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -32,28 +54,19 @@ public class CommServer extends Thread{
 	 * value 2 To set Amplitude first value 3 To set Period, first value 4
 	 */
 	public void run() {
-
 		try {
 			// prepare to receive data
-			InputStream inputStream = mConnection.openInputStream();
+			
 			System.out.println("waiting for input");
 			while (true) {
-				String data = "";
-				int command = inputStream.read();
-				while ((char) command != '*') {
-					data += (char) command;
+				byte[] signal = getRegulSignal();
+				if(signal!=null){
+					regulSignal = Double.parseDouble(signal.toString());
 				}
-				String sp[] = data.split(",");
-				for (int i = 0; i < sp.length - 1; i++) {
-					String spTemp[] = sp[i + 1].split(" ");
-					if (sp[0].compareTo("PID") == 0) {
-						updatePID(spTemp);
-					}else if (sp[0].compareTo("PI") == 0) {
-						updatePI(spTemp);
-					}else if (sp[0].compareTo("POS") == 0){
-						ref.setRef(sp[1]);
-					}
-				}
+				analogOut.set(regulSignal);
+				sendPos();
+				sendAng();
+				System.out.print(regulSignal);
 				sleep(10);
 				// processCommand(command);
 			}
@@ -62,57 +75,89 @@ public class CommServer extends Thread{
 		}
 	}
 
-	private void updatePID(String[] spTemp) {
-		int i = 0;
-		while (i < spTemp.length) {
-			switch (spTemp[i]) {
-			case "K":
-				pidParameters.K = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Ti":
-				pidParameters.Ti = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Tr":
-				pidParameters.Tr = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Td":
-				pidParameters.Td = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "N":
-				pidParameters.N = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Beta":
-				pidParameters.Beta = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "H":
-				pidParameters.H = Integer.parseInt(spTemp[i + 1]);
-				break;
-			}
-			i = i + 2;
+	
+	private void sendPos(){
+		String s = "POS,"+analogInPos.get();
+    	try {
+			outputStream.write(s.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
+	private void sendAng(){
+		String s = "ANG,"+analogInAng.get();
+    	try {
+			outputStream.write(s.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private byte[] getRegulSignal(){
+		byte[] b=new byte[100];
+		try {
+			inputStream.read(b);
+			return b;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+//	private void updatePID(String[] spTemp) {
+//		int i = 0;
+//		while (i < spTemp.length) {
+//			switch (spTemp[i]) {
+//			case "K":
+//				pidParameters.K = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Ti":
+//				pidParameters.Ti = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Tr":
+//				pidParameters.Tr = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Td":
+//				pidParameters.Td = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "N":
+//				pidParameters.N = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Beta":
+//				pidParameters.Beta = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "H":
+//				pidParameters.H = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			}
+//			i = i + 2;
+//		}
+//	}
 
-	private void updatePI(String[] spTemp) {
-		int i = 0;
-		while (i < spTemp.length) {
-			switch (spTemp[i]) {
-			case "K":
-				piParameters.K = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Ti":
-				piParameters.Ti = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Tr":
-				piParameters.Tr = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "Beta":
-				piParameters.Beta = Integer.parseInt(spTemp[i + 1]);
-				break;
-			case "H":
-				piParameters.H = Integer.parseInt(spTemp[i + 1]);
-				break;
-			}
-			i = i + 2;
-		}
-	}
+//	private void updatePI(String[] spTemp) {
+//		int i = 0;
+//		while (i < spTemp.length) {
+//			switch (spTemp[i]) {
+//			case "K":
+//				piParameters.K = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Ti":
+//				piParameters.Ti = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Tr":
+//				piParameters.Tr = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "Beta":
+//				piParameters.Beta = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			case "H":
+//				piParameters.H = Integer.parseInt(spTemp[i + 1]);
+//				break;
+//			}
+//			i = i + 2;
+//		}
+//	}
 }
