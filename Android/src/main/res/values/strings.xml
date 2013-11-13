@@ -35,4 +35,6 @@
     <string name="btstate">Bluetooth state:</string>
     <string name="disabled">Disabled</string>
     <string name="no">No</string>
+    <string name="integratoron">Integrator On</string>
+    <string name="zero">0</string>
 </resources>

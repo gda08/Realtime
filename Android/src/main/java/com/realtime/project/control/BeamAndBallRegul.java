@@ -1,43 +1,31 @@
 package com.realtime.project.control;
 
 import java.io.IOException;
-
-import com.realtime.project.CommService;
-
-import SimEnvironment.AnalogSink;
-import SimEnvironment.AnalogSource;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
+import java.io.OutputStream;
+import android.util.Log;
 
 public class BeamAndBallRegul extends Thread {
 
-	private final BluetoothSocket socket;
-	private final OutputStream outStream;
-	private PID controller;
-	private PI controller2;
+	private double positionIn, angleIn;
+	
+	private OutputStream outStream;
+	
+	private PID outer;
+	private PI inner;
 	private ReferenceGenerator refGen;
 	private double uMin = -10.0;
 	private double uMax = 10.0;
-	private CommService com;
-	public BeamAndBallRegul(ReferenceGenerator ref, BeamAndBall beam, int pri, BluetoothSocket socket) {
+	
+	public BeamAndBallRegul(ReferenceGenerator ref, int pri, OutputStream outStream) {
 		// 	analogInPos = beam.getSource(0);
 		// 	analogInAng = beam.getSource(1);
 	// 		analogOut = beam.getSink(0);
 	// 		analogRef = beam.getSink(1);
 		this.refGen = ref;
-		controller = new PID("PID");
-		controller2= new PI("PI");
+		this.outStream = outStream;
+		outer = new PID("PID");
+		inner= new PI("PI");
 		setPriority(pri);
-		com = new CommService();
-		this.socket = socket
-		outStream = null;
-		  try {
-			  outStream = socket.getOutputStream();
-          } catch (IOException e) {
-          }
 	}
 
 	private double limit(double u, double umin, double umax) {
@@ -50,38 +38,66 @@ public class BeamAndBallRegul extends Thread {
 	}
 	
 	public synchronized void setPosition(double position) {
-		this.position = position;
+		this.positionIn = position;
 	}
 	
 	public synchronized void setAngle(double angle) {
-		this.angle = angle;
+		this.angleIn = angle;
+	}
+	
+	public synchronized void setInnerParameters(PIParameters p) {
+		inner.setParameters((PIParameters) p.clone());
 	}
 
-	private double position, angle;
+	public synchronized PIParameters getInnerParameters() {
+		return inner.getParameters();
+	}
+
+	public synchronized void setOuterParameters(PIDParameters p) {
+		outer.setParameters((PIDParameters)p.clone());
+		Log.d("REGUL", "PID: " + p.K + " " + p.Ti + " " + p.integratorOn);
+	}
+
+	public synchronized PIDParameters getOuterParameters(){
+		return outer.getParameters();
+	}
+	
+	public synchronized void stopRun() {
+		doRun = false;
+	}
+	
+	private boolean doRun = true;
 	
 	public void run() {
 		long t = System.currentTimeMillis();
-		while (true) {			
+		while (doRun) {			
 			double ref = refGen.getRef();
 			double u;
-			synchronized (controller) {
-				u = limit(controller.calculateOutput(position, ref), uMin, uMax);
-				controller.updateState(u);
+			synchronized (outer) {
+				u = limit(outer.calculateOutput(positionIn, ref), uMin, uMax);
+				outer.updateState(u);
 			}
-			double u2;
-			synchronized (controller2) {
-				u2 = limit(controller2.calculateOutput(angle, u), uMin, uMax);
+			double u2 = 100;
+			synchronized (inner) {
+				u2 = limit(inner.calculateOutput(angleIn, u), uMin, uMax);
 				//analogOut.set(u2);
 				// SEND TO COMOUTER u2
-				controller2.updateState(u2);
+				String controlSignal = "CON," + u2;
+				byte[] buffer = controlSignal.getBytes();
+				try {
+					outStream.write(buffer);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				inner.updateState(u2);
 			}
 			//analogRef.set(ref);
 			long duration;
-			t = t + controller2.getHMillis();
+			t = t + inner.getHMillis();
 			
 			//update plot
 			String temp = "" + u2;
-			updatePlot(ref, position);
+			updatePlot(ref, positionIn);
 			duration = t - System.currentTimeMillis();
 			if (duration > 0) {
 				try {

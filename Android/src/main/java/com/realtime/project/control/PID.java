@@ -30,7 +30,7 @@ public class PID {
 		p.N = 7;
 		p.Td = 1.7;
 		this.v = 0;
-//		new PIDGUI(this, p, name);
+		//		new PIDGUI(this, p, name);
 		setParameters(p);
 
 	}
@@ -48,7 +48,7 @@ public class PID {
 	// Called from BeamAndBallRegul.
 	public synchronized void updateState(double u) {
 		if(p.integratorOn)
-		I = I + (p.K * p.H / p.Ti) * e + (p.H / p.Tr) * (u - v);
+			I = I + (p.K * p.H / p.Ti) * e + (p.H / p.Tr) * (u - v);
 		yOld = y;
 	}
 
@@ -66,6 +66,17 @@ public class PID {
 		}
 		ad = p.Td / (p.Td + p.N * p.H);
 		bd = p.K * ad * p.N;
+	}
+
+	// Sets the I-part of the controller to 0.
+	// For example needed when changing controller mode.
+	public synchronized void reset() {
+		I = 0;
+	}
+
+	// Returns the current PIDParameters.
+	public synchronized PIDParameters getParameters() {
+		return (PIDParameters)p.clone();
 	}
 
 }

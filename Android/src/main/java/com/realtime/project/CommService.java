@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import com.realtime.project.control.BeamAndBallRegul;
+import com.realtime.project.control.PIDParameters;
+import com.realtime.project.control.PIParameters;
+import com.realtime.project.control.ReferenceGenerator;
 
 public class CommService extends Service {
 
@@ -27,6 +33,10 @@ public class CommService extends Service {
     private ConnectThread connectThread;
     private ConnectedThread connectedThread;
     private int serverState;
+    
+    private BeamAndBallRegul regul;
+    private PIDParameters pidParams;
+    private PIParameters piParams;
 
     @Override
     public void onCreate() {
@@ -83,6 +93,28 @@ public class CommService extends Service {
             stop();
         } else if (action.equals(Str.CHECK_BT_STATE_s)) {
             broadcastBTState();
+        } else if (action.equals(Str.UPDATE_PI_PARAMS)) {
+        	String allParams = intent.getStringExtra(Str.UPDATE_PI_PARAMS);
+        	String[] params = allParams.split(",", -1);
+        	piParams.K = Double.valueOf(params[0]);
+        	piParams.Ti = Double.valueOf(params[1]);
+        	piParams.Tr = Double.valueOf(params[2]);
+        	piParams.Beta = Double.valueOf(params[3]);
+        	piParams.H = Double.valueOf(params[4]);
+        	piParams.integratorOn = Boolean.valueOf(params[5]);
+        	regul.setInnerParameters(piParams);
+        } else if (action.equals(Str.UPDATE_PID_PARAMS)) {
+        	String allParams = intent.getStringExtra(Str.UPDATE_PID_PARAMS);
+        	String[] params = allParams.split(",", -1);
+        	pidParams.K = Double.valueOf(params[0]);
+        	pidParams.Ti = Double.valueOf(params[1]);
+        	pidParams.Td = Double.valueOf(params[2]);
+        	pidParams.Tr = Double.valueOf(params[3]);
+        	pidParams.N = Double.valueOf(params[4]);
+        	pidParams.Beta = Double.valueOf(params[5]);
+        	pidParams.H = Double.valueOf(params[6]);
+        	pidParams.integratorOn = Boolean.valueOf(params[7]);
+        	regul.setOuterParameters(pidParams);
         }
         return Service.START_NOT_STICKY;
     }
@@ -143,6 +175,7 @@ public class CommService extends Service {
             acceptThread = null;
         }
         setState(Str.SERVER_STATE_DISCONNECTED);
+        if (regul != null) regul.stopRun();
     }
 
     private void write(byte[] out) {
@@ -321,6 +354,12 @@ public class CommService extends Service {
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
+            regul = new BeamAndBallRegul(new ReferenceGenerator(0), 8, mmOutStream);
+            regul.start();
+            
+            pidParams = regul.getOuterParameters();
+            piParams = regul.getInnerParameters();
+            
         }
 
         public void run() {
@@ -334,10 +373,16 @@ public class CommService extends Service {
                     Intent i = new Intent(Str.READ_DATA_s);
                     i.putExtra(Str.READ_DATA_s, bytes);
                     sendBroadcast(i);
-                    toastPrint(data);
+                    //toastPrint(data);
+                    String key = data.split(",", -1)[0];
+                    String value = data.split(",", -1)[1];
+                    if (key.equals("POS")) {
+                    	regul.setPosition(Double.valueOf(value));
+                    } else if (key.equals("ANG")) {
+                    	regul.setAngle(Double.valueOf(value));
+                    }
                 } catch (IOException e) {
                     connectionLost();
-                    // Start the service over to restart listening mode
                     CommService.this.start();
                     break;
                 }

@@ -18,7 +18,24 @@ public class Str {
     public static final String SCAN_DEVICES_s = "s11";
     public static final String MAKE_DISCOVERABLE_s = "s12";
     public static final String CHECK_BT_STATE_s = "s13";
-
+    
+    public static final String UPDATE_PI_K = "s14";
+    public static final String UPDATE_PI_H = "s15";
+    public static final String UPDATE_PI_TI = "s16";
+    public static final String UPDATE_PI_TR = "s17";
+    public static final String UPDATE_PI_BETA = "s18";
+    
+    public static final String UPDATE_PID_K = "s19";
+    public static final String UPDATE_PID_H = "s20";
+    public static final String UPDATE_PID_BETA = "s21";
+    public static final String UPDATE_PID_TI = "s22";
+    public static final String UPDATE_PID_TD = "s23";
+    public static final String UPDATE_PID_TR = "s24";
+    public static final String UPDATE_PID_N = "s25";
+    
+    public static final String UPDATE_PI_PARAMS = "s26";
+    public static final String UPDATE_PID_PARAMS = "27";
+    
     public final static int ENABLE_BT_int = 6;
     public final static int MAKE_DISCOVERABLE = 8;
 

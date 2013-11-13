@@ -4,16 +4,20 @@ import com.realtime.project.R;
 import com.realtime.project.Str;
 import com.realtime.project.R.id;
 import com.realtime.project.R.layout;
+import com.realtime.project.control.PIParameters;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 
-public class PIParams extends AbstractActivity {
+public class PIParamsGUI extends AbstractActivity {
 
-    private TextView txtK, txtServerState, txtBTState;;
+    private TextView txtK, txtTi, txtTr, txtBeta, txtH;
+    private TextView txtServerState, txtBTState;
+    private CheckBox boxIntegratorOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,11 @@ public class PIParams extends AbstractActivity {
         txtServerState = (TextView)findViewById(R.id.txtServerStatePi);
         txtBTState = (TextView)findViewById(R.id.txtBTStatePi);
         txtK = (TextView)findViewById(R.id.txtPiK);
+        txtTi = (TextView)findViewById(R.id.txtPiTi);
+        txtTr = (TextView)findViewById(R.id.txtPiTr);
+        txtBeta = (TextView)findViewById(R.id.txtPiBeta);
+        txtH = (TextView)findViewById(R.id.txtPiH);
+        boxIntegratorOn = (CheckBox)findViewById(R.id.chckBoxPiIntegratorOn);
 
         super.setBtStateTextView(txtBTState);
         super.setServerTextView(txtServerState);
@@ -37,11 +46,15 @@ public class PIParams extends AbstractActivity {
             }
         });
     }
-
+    
     public void updatePI() {
-        String s = "PI" + ","
-                + txtK.getText().toString() + " ";
-        sendToService(Str.SEND_TO_SERVER, s);
+    	String params = txtK.getText().toString() + "," + 
+    			txtTi.getText().toString() + "," +
+    			txtTr.getText().toString() + "," +
+    			txtBeta.getText().toString() + "," +
+    			txtH.getText().toString() + "," +
+    			boxIntegratorOn.isChecked();
+    	sendToService(Str.UPDATE_PI_PARAMS, params);
     }
 
 }

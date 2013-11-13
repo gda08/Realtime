@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class Plotter extends AbstractActivity {
+public class PlotterGUI extends AbstractActivity {
 
     private TextView txtAmp, txtPeriod, txtServerState, txtBTState;
 

@@ -30,17 +30,17 @@ public class MainActivity extends TabActivity {
 
         TabHost.TabSpec plotterspec = tabHost.newTabSpec("Plotter");
         plotterspec.setIndicator("Plotter");
-        Intent plotterIntent = new Intent(this, Plotter.class);
+        Intent plotterIntent = new Intent(this, PlotterGUI.class);
         plotterspec.setContent(plotterIntent);
 
         TabHost.TabSpec pidspec = tabHost.newTabSpec("PID");
         pidspec.setIndicator("PID");
-        Intent pidIntent = new Intent(this, PIDParams.class);
+        Intent pidIntent = new Intent(this, PIDParamsGUI.class);
         pidspec.setContent(pidIntent);
 
         TabHost.TabSpec pispec = tabHost.newTabSpec("PI");
         pispec.setIndicator("PI");
-        Intent piIntent = new Intent(this, PIParams.class);
+        Intent piIntent = new Intent(this, PIParamsGUI.class);
         pispec.setContent(piIntent);
 
         tabHost.addTab(plotterspec);

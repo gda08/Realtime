@@ -34,8 +34,18 @@ public class ReadCommServer extends Thread{
 			while (true) {
 				byte[] signal = getRegulSignal();
 				if(signal!=null){
-					regulSignal = Double.parseDouble(new String(signal));
+					String s = new String(signal);
+					String key = s.split(",", -1)[0];
+					String value = s.split(",", -1)[1];
+					if (key.equals("CON")) {
+						try {
+							regulSignal = Double.parseDouble(value);
+						} catch (Exception e) {
+							regulSignal = 0;
+						}
+					}
 				}
+				System.out.println("Control: " + regulSignal);
 				analogOut.set(regulSignal);
 			}
 		} catch (Exception e) {

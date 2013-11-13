@@ -42,8 +42,41 @@
             android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="0dp" android:text="@string/k"></TextView>
         <EditText android:layout_weight="0.5" android:id="@+id/txtPiK"
-            android:layout_height="wrap_content" android:layout_width="0dp"></EditText>
+            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
     </LinearLayout>
+    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
+        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp" android:text="@string/ti"></TextView>
+        <EditText android:layout_weight="0.5" android:id="@+id/txtPiTi"
+            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
+    </LinearLayout>
+    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
+        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp" android:text="@string/tr"></TextView>
+        <EditText android:layout_weight="0.5" android:id="@+id/txtPiTr"
+            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
+    </LinearLayout>
+    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
+        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp" android:text="@string/beta"></TextView>
+        <EditText android:layout_weight="0.5" android:id="@+id/txtPiBeta"
+            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
+    </LinearLayout>
+    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
+        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
+        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
+            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="0dp" android:text="@string/h"></TextView>
+        <EditText android:layout_weight="0.5" android:id="@+id/txtPiH"
+            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
+    </LinearLayout>
+    <CheckBox android:id="@+id/chckBoxPiIntegratorOn" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/integratoron"></CheckBox>
 
     <Button android:id="@+id/btnPiUpdate" android:layout_height="wrap_content"
         android:layout_width="match_parent" android:text="@string/update"

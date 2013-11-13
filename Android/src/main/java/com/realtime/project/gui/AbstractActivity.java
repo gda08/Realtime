@@ -3,6 +3,7 @@ package com.realtime.project.gui;
 import com.realtime.project.CommService;
 import com.realtime.project.R;
 import com.realtime.project.Str;
+import com.realtime.project.control.BeamAndBallRegul;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -21,6 +22,8 @@ public abstract class AbstractActivity extends Activity {
 
     private TextView btState, serverState;
     private BroadcastReceiver myReceiver;
+    
+    private BeamAndBallRegul regul;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

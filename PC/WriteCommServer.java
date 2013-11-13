@@ -13,6 +13,8 @@ public class WriteCommServer extends Thread {
 	
 	private AnalogSource analogInPos;
     private AnalogSource analogInAng;
+    
+    private boolean doRun = true;
 
 	public WriteCommServer(StreamConnection connection, BeamAndBall beam) {
 		mConnection = connection;
@@ -31,7 +33,7 @@ public class WriteCommServer extends Thread {
 			sendPos();
 			sendAng();
 			try {
-				sleep(1000);
+				sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -39,16 +41,19 @@ public class WriteCommServer extends Thread {
 	}
 	
 	private void sendPos(){
-		String s = "POS,"+analogInPos.get();
+		//String s = "POS,"+analogInPos.get();
+		String s = "POS,10";
     	try {
 			outputStream.write(s.getBytes());
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 	}
 	
 	private void sendAng(){
-		String s = "ANG,"+analogInAng.get();
+		//String s = "ANG,"+analogInAng.get();
+		String s = "ANG,20";
     	try {
 			outputStream.write(s.getBytes());
 		} catch (IOException e) {
