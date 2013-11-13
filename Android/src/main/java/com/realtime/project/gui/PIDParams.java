@@ -1,9 +1,13 @@
 package com.realtime.project.gui;
 
+import com.realtime.project.R;
+import com.realtime.project.Str;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 public class PIDParams extends AbstractActivity {
 

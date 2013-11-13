@@ -1,9 +1,15 @@
 package com.realtime.project.gui;
 
+import com.realtime.project.R;
+import com.realtime.project.Str;
+import com.realtime.project.R.id;
+import com.realtime.project.R.layout;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 
 public class Plotter extends AbstractActivity {
 
@@ -34,9 +40,7 @@ public class Plotter extends AbstractActivity {
     }
 
     public void updatePlotter() {
-        String s = "plotter" + ","
-                + txtAmp.getText().toString() + ","
-                + txtPeriod.getText().toString() + " ";
+        String s = "123";
         sendToService(Str.SEND_TO_SERVER, s);
     }
 

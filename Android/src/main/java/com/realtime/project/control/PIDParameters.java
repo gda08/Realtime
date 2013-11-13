@@ -1,4 +1,5 @@
-package com.realtime.project;
+package com.realtime.project.control;
+
 public class PIDParameters implements Cloneable {
     double K;
     double Ti;

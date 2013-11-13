@@ -1,4 +1,4 @@
-package com.realtime.project;
+package com.realtime.project.control;
 
 public class PIParameters implements Cloneable {
 	double K;

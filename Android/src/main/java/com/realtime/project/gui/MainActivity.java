@@ -1,5 +1,8 @@
 package com.realtime.project.gui;
 
+import com.realtime.project.R;
+import com.realtime.project.Str;
+
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.Toast;
+
 
 /**
  * CREATE THREE TABS. EACH TAB CONTAINS ONE ACTIVITY.

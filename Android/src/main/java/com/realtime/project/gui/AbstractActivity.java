@@ -1,5 +1,9 @@
 package com.realtime.project.gui;
 
+import com.realtime.project.CommService;
+import com.realtime.project.R;
+import com.realtime.project.Str;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -11,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public abstract class AbstractActivity extends Activity {
 

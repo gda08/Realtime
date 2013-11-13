@@ -1,4 +1,4 @@
-package com.realtime.project;
+package com.realtime.project.control;
 
 //PI class to be written by you
 public class PI {

@@ -1,4 +1,4 @@
-package com.realtime.project;
+package com.realtime.project.control;
 
 //PID class to be written by you
 public class PID {
