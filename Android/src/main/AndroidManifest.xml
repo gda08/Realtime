@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.realtime.project"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="8" />
+      package="com.realtime.project"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="8" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -14,11 +11,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name" >
         <activity
-            android:name="com.realtime.project.MainActivity"
+            android:name="com.realtime.project.gui.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,12 +22,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Plotter" />
-        <activity android:name=".PIParams" />
-        <activity android:name=".PIDParams" />
+        <activity android:name=".gui.PlotterGUI" />
+        <activity android:name=".gui.PIParamsGUI" />
+        <activity android:name=".gui.PIDParamsGUI" />
 
-        <service android:name=".CommService" />
-
+        <service android:name="com.realtime.project.CommService" />
     </application>
-
 </manifest>
