@@ -1,4 +1,3 @@
-package PC;
 
 import javax.bluetooth.DiscoveryAgent;
 import javax.bluetooth.LocalDevice;
@@ -11,15 +10,18 @@ public class MainBB {
 
 	public static void main(String[] argv) {
 		final int regulPriority = 8;
+		
 		StreamConnectionNotifier notifier;
         StreamConnection connection = null;
         LocalDevice local = null;
+        
         try {
             local = LocalDevice.getLocalDevice();
             local.setDiscoverable(DiscoveryAgent.GIAC);
 
             UUID uuid = new UUID(80087355); // "04c6093b-0000-1000-8000-00805f9b34fb"
             String url = "btspp://localhost:" + uuid.toString() + ";name=RemoteBluetooth";
+            
             notifier = (StreamConnectionNotifier) Connector.open(url);
             connection = notifier.acceptAndOpen();
         } catch (Exception e) {
@@ -28,8 +30,11 @@ public class MainBB {
         }
 		BeamAndBall bb = new BeamAndBall();
 		
-		CommServer server = new CommServer(connection,bb);
-		server.run();
+		ReadCommServer readServer = new ReadCommServer(connection, bb);
+		WriteCommServer writeServer = new WriteCommServer(connection, bb);
+		
+		readServer.start();
+		writeServer.start();
 	}
 }
 

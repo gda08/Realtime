@@ -1,4 +1,3 @@
-package PC;
 
 import javax.swing.*;
 import java.awt.*;
