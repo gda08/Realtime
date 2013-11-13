@@ -41,8 +41,7 @@ public class WriteCommServer extends Thread {
 	}
 	
 	private void sendPos(){
-		//String s = "POS,"+analogInPos.get();
-		String s = "POS,10";
+		String s = "POS,"+analogInPos.get();
     	try {
 			outputStream.write(s.getBytes());
 		} catch (IOException e) {
@@ -52,8 +51,7 @@ public class WriteCommServer extends Thread {
 	}
 	
 	private void sendAng(){
-		//String s = "ANG,"+analogInAng.get();
-		String s = "ANG,20";
+		String s = "ANG,"+analogInAng.get();
     	try {
 			outputStream.write(s.getBytes());
 		} catch (IOException e) {
