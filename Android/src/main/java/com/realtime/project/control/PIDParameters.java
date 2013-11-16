@@ -10,7 +10,7 @@ public class PIDParameters implements Cloneable {
     public double H;
     public boolean integratorOn;
 
-    public Object clone() {
+    public synchronized Object clone() {
 		try {
 		    return super.clone();
 		} catch (Exception x) {
