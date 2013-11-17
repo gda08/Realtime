@@ -1,7 +1,6 @@
 package com.realtime.project.gui;
 
 import com.realtime.project.R;
-import com.realtime.project.Str;
 
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
@@ -17,8 +16,11 @@ import android.widget.Toast;
  * CREATE THREE TABS. EACH TAB CONTAINS ONE ACTIVITY.
  */
 
+@SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 
+	private static final String TOAST = "s8";
+	
     private BroadcastReceiver myReceiver;
 
     @Override
@@ -73,14 +75,14 @@ public class MainActivity extends TabActivity {
             }
         };
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Str.TOAST);
+        filter.addAction(TOAST);
         registerReceiver(myReceiver, filter);
     }
 
     private void handleIntent(Intent intent) {
         String action = intent.getAction();
-        if (action.equals(Str.TOAST)) {
-            Toast.makeText(getApplicationContext(), intent.getStringExtra(Str.TOAST), Toast.LENGTH_SHORT).show();
+        if (action.equals(TOAST)) {
+            Toast.makeText(getApplicationContext(), intent.getStringExtra(TOAST), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,20 +1,16 @@
 package com.realtime.project.gui;
 
 import com.realtime.project.R;
-import com.realtime.project.Str;
-import com.realtime.project.R.id;
-import com.realtime.project.R.layout;
-import com.realtime.project.control.PIParameters;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 public class PIParamsGUI extends AbstractActivity {
-
+	
+	private static final String UPDATE_PI_PARAMS = "s26";
+	
     private TextView txtK, txtTi, txtTr, txtBeta, txtH;
     private TextView txtServerState, txtBTState;
     private CheckBox boxIntegratorOn;
@@ -54,7 +50,7 @@ public class PIParamsGUI extends AbstractActivity {
     			txtBeta.getText().toString() + "," +
     			txtH.getText().toString() + "," +
     			boxIntegratorOn.isChecked();
-    	sendToService(Str.UPDATE_PI_PARAMS, params);
+    	sendToService(UPDATE_PI_PARAMS, params);
     }
 
 }

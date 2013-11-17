@@ -1,7 +1,6 @@
 package com.realtime.project.gui;
 
 import com.realtime.project.R;
-import com.realtime.project.Str;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +10,10 @@ import android.widget.TextView;
 
 
 public class PIDParamsGUI extends AbstractActivity {
-
-	private TextView txtK, txtTi, txtTd, txtTr, txtN, txtBeta, txtH;
+	
+	private static final String UPDATE_PID_PARAMS = "27";
+    
+    private TextView txtK, txtTi, txtTd, txtTr, txtN, txtBeta, txtH;
     private TextView txtServerState, txtBTState;
     private CheckBox boxIntegratorOn;
 
@@ -55,7 +56,7 @@ public class PIDParamsGUI extends AbstractActivity {
     			txtBeta.getText().toString() + "," +
     			txtH.getText().toString() + "," + 
     			boxIntegratorOn.isChecked();
-    	sendToService(Str.UPDATE_PID_PARAMS, params);
+    	sendToService(UPDATE_PID_PARAMS, params);
     }
 
 }

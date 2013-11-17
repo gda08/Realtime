@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -8,9 +9,9 @@ import SimEnvironment.AnalogSink;
 public class ReadCommServer extends Thread{
 	
 	private StreamConnection mConnection;
-	private AnalogSink analogOut;
-	private InputStream inputStream;
-	private double regulSignal;
+    private AnalogSink analogOut;
+    private InputStream inputStream;
+    private double regulSignal;
 
 	public ReadCommServer(StreamConnection connection, BeamAndBall beam) {
         analogOut = beam.getSink(0);
@@ -36,7 +37,7 @@ public class ReadCommServer extends Thread{
 					String s = new String(signal);
 					String key = s.split(",", -1)[0];
 					String value = s.split(",", -1)[1];
-					if (key.equals("CON")) {
+					if (key.equals("CONTROL_SIGNAL")) {
 						try {
 							regulSignal = Double.parseDouble(value);
 						} catch (Exception e) {
@@ -44,10 +45,8 @@ public class ReadCommServer extends Thread{
 						}
 					}
 				}
-				synchronized(this){
-					analogOut.set(regulSignal); //moved to minimize delay
-				}
-				System.out.println("Control: " + regulSignal);
+				System.out.println("CONTROL_SIGNAL: " + regulSignal);
+				analogOut.set(regulSignal);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

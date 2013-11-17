@@ -2,13 +2,12 @@ package com.realtime.project.gui;
 
 import com.realtime.project.CommService;
 import com.realtime.project.R;
-import com.realtime.project.Str;
-import com.realtime.project.control.BeamAndBallRegul;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -20,21 +19,42 @@ import android.widget.Toast;
 
 public abstract class AbstractActivity extends Activity {
 
+	private static final String CONNECT_TO_SERVER = "s3";
+	private static final String SERVER_STATE_s = "s7";
+    private static final String BT_STATE_s = "s9";
+    private static final String SCAN_DEVICES_s = "s11";
+    private static final String MAKE_DISCOVERABLE_s = "s12";
+    private static final String CHECK_BT_STATE_s = "s13";    
+    private static final String MODE_OFF_s = "s28";
+    private static final String MODE_BEAM_s = "s29";
+    private static final String MODE_BALL_s = "s30";
+    private static final int 	ENABLE_BT_int = 6;
+    private static final int 	MAKE_DISCOVERABLE = 8;
+    private static final int 	SERVER_STATE_DISCONNECTED = 13;
+    private static final int 	SERVER_STATE_CONNECTING = 14;
+    private static final int 	SERVER_STATE_CONNECTED = 15;
+    private static final int 	BT_STATE_ENABLED = 16;
+    private static final int 	BT_STATE_DISABLED = 17;    
+    private static final int 	MODE_OFF = 0;
+    private static final int 	MODE_BEAM = 1;
+    private static final int 	MODE_BALL = 2;
+	
     private TextView btState, serverState;
     private BroadcastReceiver myReceiver;
     
-    private BeamAndBallRegul regul;
+    private AlertDialog regulModeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerReceiver();
+        createActionDialog();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sendToService(Str.CHECK_BT_STATE_s);
+        sendToService(CHECK_BT_STATE_s);
     }
 
     @Override
@@ -91,14 +111,17 @@ public abstract class AbstractActivity extends Activity {
                 disableBT();
                 return true;
             case R.id.set_discoverable:
-                sendToService(Str.MAKE_DISCOVERABLE_s);
+                sendToService(MAKE_DISCOVERABLE_s);
                 return true;
             case R.id.start_scan:
-                sendToService(Str.SCAN_DEVICES_s);
+                sendToService(SCAN_DEVICES_s);
                 return true;
             case R.id.connect_to_server:
-                sendToService(Str.CONNECT_TO_SERVER);
+                sendToService(CONNECT_TO_SERVER);
                 return true;
+            case R.id.regul_mode:
+            	regulModeDialog.show();
+            	return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -112,39 +135,39 @@ public abstract class AbstractActivity extends Activity {
             }
         };
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Str.SERVER_STATE_s);
-        filter.addAction(Str.BT_STATE_s);
+        filter.addAction(SERVER_STATE_s);
+        filter.addAction(BT_STATE_s);
         registerReceiver(myReceiver, filter);
     }
 
     private void handleIntent(Intent intent) {
         String action = intent.getAction();
-        if (action.equals(Str.SERVER_STATE_s)) {
-            updateServerState(intent.getIntExtra(Str.SERVER_STATE_s, 0));
-        } else if (action.equals(Str.BT_STATE_s)) {
-            updateBTState(intent.getIntExtra(Str.BT_STATE_s, 0));
+        if (action.equals(SERVER_STATE_s)) {
+            updateServerState(intent.getIntExtra(SERVER_STATE_s, 0));
+        } else if (action.equals(BT_STATE_s)) {
+            updateBTState(intent.getIntExtra(BT_STATE_s, 0));
         }
     }
 
     private void enableBT() {
-        updateBTState(Str.BT_STATE_ENABLED);
+        updateBTState(BT_STATE_ENABLED);
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivityForResult(enableBtIntent, Str.ENABLE_BT_int);
+        startActivityForResult(enableBtIntent, ENABLE_BT_int);
     }
 
     private void disableBT() {
-        updateBTState(Str.BT_STATE_DISABLED);
+        updateBTState(BT_STATE_DISABLED);
         BluetoothAdapter.getDefaultAdapter().disable();
-        sendToService(Str.BT_STATE_s, Str.BT_STATE_DISABLED);
+        sendToService(BT_STATE_s, BT_STATE_DISABLED);
     }
 
     private void updateBTState(int state) {
         switch (state) {
-            case Str.BT_STATE_ENABLED:
+            case BT_STATE_ENABLED:
                 btState.setText("Enabled");
                 btState.setTextColor(getResources().getColor(R.color.GREEN));
                 break;
-            case Str.BT_STATE_DISABLED:
+            case BT_STATE_DISABLED:
                 btState.setText("Disabled");
                 btState.setTextColor(getResources().getColor(R.color.RED));
                 break;
@@ -153,15 +176,15 @@ public abstract class AbstractActivity extends Activity {
 
     private void updateServerState(int state) {
         switch (state) {
-            case Str.SERVER_STATE_CONNECTED:
+            case SERVER_STATE_CONNECTED:
                 serverState.setText("Connected");
                 serverState.setTextColor(getResources().getColor(R.color.GREEN));
                 break;
-            case Str.SERVER_STATE_CONNECTING:
+            case SERVER_STATE_CONNECTING:
                 serverState.setText("Connecting");
                 serverState.setTextColor(getResources().getColor(R.color.ORAGNE));
                 break;
-            case Str.SERVER_STATE_DISCONNECTED:
+            case SERVER_STATE_DISCONNECTED:
                 serverState.setText("Disconnected");
                 serverState.setTextColor(getResources().getColor(R.color.RED));
                 break;
@@ -170,17 +193,41 @@ public abstract class AbstractActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Str.MAKE_DISCOVERABLE) {
+        if (requestCode == MAKE_DISCOVERABLE) {
             if (resultCode != 0) {
                 Toast.makeText(getApplicationContext(), "Device discoverable for 120 seconds", Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == Str.ENABLE_BT_int) {
+        } else if (requestCode == ENABLE_BT_int) {
             if (resultCode != 0) {
-                sendToService(Str.BT_STATE_s, Str.BT_STATE_ENABLED);
+                sendToService(BT_STATE_s, BT_STATE_ENABLED);
             } else {
-                sendToService(Str.BT_STATE_s, Str.BT_STATE_DISABLED);
+                sendToService(BT_STATE_s, BT_STATE_DISABLED);
             }
         }
+    }
+    
+    private void createActionDialog() {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("REGUL MODE");
+        CharSequence[] c = {"Mode: OFF", "Mode: BEAM", "Mode: BALL"};
+        builder.setItems(c, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+                case MODE_OFF:
+                	sendToService(MODE_OFF_s);
+                	break;
+                case MODE_BEAM:
+                	sendToService(MODE_BEAM_s);
+                	break;
+                case MODE_BALL:
+                	sendToService(MODE_BALL_s);
+                	break;
+				}
+			}
+        	
+        });
+        regulModeDialog = builder.create();
     }
 
 }

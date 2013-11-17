@@ -1,21 +1,28 @@
 package com.realtime.project.control;
 
-import java.awt.*;
-
-public class ReferenceGenerator{
-
-	private int period;
-	private double ref;
+public class ReferenceGenerator extends Thread {
+	
+	private double period;
+	private double ref;	
 
 	public ReferenceGenerator(double pos) {
 		ref = pos;
 	}
-	public synchronized void setRef(double pos){
+	
+	public synchronized void setRef(double pos) {
 		ref = pos;
 	}
-	public synchronized double getRef() 
-	{
+	
+	public synchronized double getRef() {
 		return ref;
+	}
+	
+	public synchronized void setPeriod(double period) {
+		this.period = period;
+	}
+	
+	public synchronized double getPeriod() {
+		return period;
 	}
 
 }

@@ -9,12 +9,9 @@ import javax.microedition.io.StreamConnectionNotifier;
 public class MainBB {
 
 	public static void main(String[] argv) {
-		final int regulPriority = 8;
-		
 		StreamConnectionNotifier notifier;
         StreamConnection connection = null;
-        LocalDevice local = null;
-        
+        LocalDevice local = null;        
         try {
             local = LocalDevice.getLocalDevice();
             local.setDiscoverable(DiscoveryAgent.GIAC);
