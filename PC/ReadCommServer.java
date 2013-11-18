@@ -4,17 +4,25 @@ import java.io.InputStream;
 
 import javax.microedition.io.StreamConnection;
 
+import se.lth.control.realtime.AnalogOut;
+import se.lth.control.realtime.IOChannelException;
+
 import SimEnvironment.AnalogSink;
 
 public class ReadCommServer extends Thread{
 	
 	private StreamConnection mConnection;
-    private AnalogSink analogOut;
+	private AnalogOut analogOut;
     private InputStream inputStream;
     private double regulSignal;
 
 	public ReadCommServer(StreamConnection connection, BeamAndBall beam) {
-        analogOut = beam.getSink(0);
+        try {
+			analogOut = new AnalogOut(0);
+		} catch (IOChannelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		mConnection = connection;
 		regulSignal = 0;
 		try {
@@ -54,7 +62,7 @@ public class ReadCommServer extends Thread{
 	}
 
 	private byte[] getRegulSignal(){
-		byte[] b=new byte[100];
+		byte[] b=new byte[500];
 		try {
 			inputStream.read(b);
 			return b;
