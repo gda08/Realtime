@@ -27,8 +27,8 @@ public class PID {
 		p.Tr = 10.0;
 		this.e = 0;
 		this.I = 0;
-		p.N = 7;
-		p.Td = 1.7;
+		p.N = 10;
+		p.Td = 1.0;
 		this.v = 0;
 		//		new PIDGUI(this, p, name);
 		setParameters(p);

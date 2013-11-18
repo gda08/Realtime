@@ -6,5 +6,6 @@
     <item android:id="@+id/set_discoverable" android:title="Set discovarable"/>
     <item android:id="@+id/start_scan" android:title="Scan devices" />
     <item android:id="@+id/connect_to_server" android:title="Connect to Server" />
+    <item android:id="@+id/regul_mode" android:title="Regul mode" />
 
 </menu>

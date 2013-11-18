@@ -22,7 +22,6 @@ import com.realtime.project.control.ReferenceGenerator;
 
 public class CommService extends Service {
 
-	// För att läsa mer om vad UUID är för något: http://en.wikipedia.org/wiki/Bluetooth#Technical_informations
 	private static final UUID 	MY_UUID = UUID.fromString("04c6093b-0000-1000-8000-00805f9b34fb");
     private static final String NAME = "BT_SERVICE";
     private static final String CONNECT_TO_SERVER = "s3";
@@ -31,13 +30,13 @@ public class CommService extends Service {
     private static final String SERVER_STATE_s = "s7";
     private static final String TOAST = "s8";
     private static final String BT_STATE_s = "s9";
-    private static final String READ_DATA_s = "s10";
     private static final String CHECK_BT_STATE_s = "s13";    
     private static final String UPDATE_PI_PARAMS = "s26";
     private static final String UPDATE_PID_PARAMS = "27";    
     private static final String MODE_OFF_s = "s28";
     private static final String MODE_BEAM_s = "s29";
     private static final String MODE_BALL_s = "s30";
+    public static final String 	UPDATE_POSITION_REFERENCE = "s50";
     private static final int 	SERVER_STATE_DISCONNECTED = 13;
     private static final int 	SERVER_STATE_CONNECTING = 14;
     private static final int 	SERVER_STATE_CONNECTED = 15;
@@ -87,17 +86,10 @@ public class CommService extends Service {
     
     // Sends the position and the angle to regul
     private synchronized void sendDataToRegul(String data, int bytes) {
-    	Intent i = new Intent(READ_DATA_s);
-        i.putExtra(READ_DATA_s, bytes);
-        sendBroadcast(i);
-        //toastPrint(data);
-        String key = data.split(",", -1)[0];
-        String value = data.split(",", -1)[1];
-        if (key.equals("POS")) {
-        	regul.setPosition(Double.valueOf(value));
-        } else if (key.equals("ANG")) {
-        	regul.setAngle(Double.valueOf(value));
-        }
+        String posValue = data.split(",", -1)[0];
+        String angValue = data.split(",", -1)[1];
+        regul.setPosition(Double.parseDouble(posValue));
+        regul.setAngle(Double.parseDouble(angValue));
     }
 
     private synchronized void readPairedDevices() {
@@ -172,6 +164,9 @@ public class CommService extends Service {
         } else if (action.equals(MODE_BEAM_s)) {
         	mode = MODE_BALL_s;
         	if (regul!=null) regul.setBEAMmode();
+        } else if (action.equals(UPDATE_POSITION_REFERENCE)) {
+        	String ref = intent.getStringExtra(UPDATE_POSITION_REFERENCE);
+        	regul.setRef(Double.parseDouble(ref));
         }
         return Service.START_NOT_STICKY;
     }

@@ -3,14 +3,16 @@ package com.realtime.project.control;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import android.util.Log;
+
 public class BeamAndBallRegul extends Thread {
-	
+
 	private static final int MODE_OFF = 0;
-    private static final int MODE_BEAM = 1;
-    private static final int MODE_BALL = 2;
-    
-    private static int MAX = 10;
-	private static int MIN = -10;
+	private static final int MODE_BEAM = 1;
+	private static final int MODE_BALL = 2;
+
+	private static int MAX = 8;
+	private static int MIN = -8;
 
 	private double positionIn, angleIn;
 	private int priority;
@@ -64,6 +66,10 @@ public class BeamAndBallRegul extends Thread {
 		return outerPIDcontroller.getParameters();
 	}
 
+	public synchronized void setRef(double ref) {
+		yref = ref;
+	}
+
 	public synchronized void setOFFmode() {
 		mode = MODE_OFF;
 	}
@@ -97,7 +103,7 @@ public class BeamAndBallRegul extends Thread {
 		setPriority(priority);
 		//mutex.take();
 		while (doRun) {
-			yref = refGen.getRef();
+			//yref = refGen.getRef();
 			switch (mode) {
 			case MODE_OFF: {
 				synchronized (outerPIDcontroller) {
@@ -113,6 +119,7 @@ public class BeamAndBallRegul extends Thread {
 			}
 			case MODE_BEAM: {
 				y = angleIn;
+				yref = 0;
 				synchronized (innerPIcontroller) {
 					u = innerPIcontroller.calculateOutput(y, yref);
 					u = limit(u, MIN, MAX);
@@ -124,16 +131,16 @@ public class BeamAndBallRegul extends Thread {
 			}
 			case MODE_BALL: {
 				double out1, out2 = 0;
-				synchronized (innerPIcontroller) {
-					out1 = innerPIcontroller.calculateOutput(positionIn, yref);
-					out1 = limit(out1, MIN, MAX);
-					innerPIcontroller.updateState(out1);
-				}
 				synchronized (outerPIDcontroller) {
-					out2 = outerPIDcontroller.calculateOutput(angleIn, out1);
+					out1 = outerPIDcontroller.calculateOutput(positionIn, yref);
+					out1 = limit(out1, MIN, MAX);
+					outerPIDcontroller.updateState(out1);
+				}
+				synchronized (innerPIcontroller) {
+					out2 = innerPIcontroller.calculateOutput(angleIn, out1);
 					out2 = limit(out2, MIN, MAX);
 					sendToPC(out2);
-					outerPIDcontroller.updateState(out2);
+					innerPIcontroller.updateState(out2);
 				}
 				// TODO: UPDATE PLOTTER USING yref, y and u
 				break;
@@ -143,7 +150,12 @@ public class BeamAndBallRegul extends Thread {
 				break;
 			}
 			}
-			// sleep
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			/*
 			starttime = starttime + innerPIcontroller.getHMillis();
 			duration = starttime - System.currentTimeMillis();
 			if (duration > 0) {
@@ -152,6 +164,7 @@ public class BeamAndBallRegul extends Thread {
 				} catch (InterruptedException x) {
 				}
 			}
+			 */
 		}
 		//mutex.give();
 	}

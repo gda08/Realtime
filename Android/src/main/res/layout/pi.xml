@@ -1,84 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/btstate"
-            android:id="@+id/textView" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/disabled"
             android:id="@+id/txtBTStatePi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disabled"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/RED" />
 
         <TextView
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/serverstate"
-            android:id="@+id/textView5" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
+            android:id="@+id/txtServerStatePi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/disconnected"
-            android:id="@+id/txtServerStatePi"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/RED" />
     </LinearLayout>
-    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
-        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp" android:text="@string/k"></TextView>
-        <EditText android:layout_weight="0.5" android:id="@+id/txtPiK"
-            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
-    </LinearLayout>
-    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
-        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp" android:text="@string/ti"></TextView>
-        <EditText android:layout_weight="0.5" android:id="@+id/txtPiTi"
-            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
-    </LinearLayout>
-    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
-        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp" android:text="@string/tr"></TextView>
-        <EditText android:layout_weight="0.5" android:id="@+id/txtPiTr"
-            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
-    </LinearLayout>
-    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
-        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp" android:text="@string/beta"></TextView>
-        <EditText android:layout_weight="0.5" android:id="@+id/txtPiBeta"
-            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
-    </LinearLayout>
-    <LinearLayout android:weightSum="1" android:layout_height="wrap_content"
-        android:id="@+id/LinearLayout05" android:layout_width="match_parent">
-        <TextView android:id="@+id/TextView05" android:layout_weight="0.5"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp" android:text="@string/h"></TextView>
-        <EditText android:layout_weight="0.5" android:id="@+id/txtPiH"
-            android:layout_height="wrap_content" android:layout_width="0dp" android:text="@string/zero"></EditText>
-    </LinearLayout>
-    <CheckBox android:id="@+id/chckBoxPiIntegratorOn" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/integratoron"></CheckBox>
 
-    <Button android:id="@+id/btnPiUpdate" android:layout_height="wrap_content"
-        android:layout_width="match_parent" android:text="@string/update"
-        android:onClick="updatePI"></Button>
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/k"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPiK"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="1.0" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/ti"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPiTi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="0.0" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/tr"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPiTr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="10.0" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/beta"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPiBeta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="1.0" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/h"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPiH"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="0.1" >
+        </EditText>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chckBoxPiIntegratorOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/integratoron" >
+    </CheckBox>
+
+    <Button
+        android:id="@+id/btnPiUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="updatePI"
+        android:text="@string/update" >
+    </Button>
+
 </LinearLayout>

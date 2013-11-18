@@ -1,75 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:weightSum="1">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.05">
+        android:layout_weight="0.05" >
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/btstate"
-            android:id="@+id/textView" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/disabled"
             android:id="@+id/txtBTStatePlotter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disabled"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/RED" />
 
         <TextView
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/serverstate"
-            android:id="@+id/textView5" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
+            android:id="@+id/txtServerStatePlotter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/disconnected"
-            android:id="@+id/txtServerStatePlotter"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/RED" />
     </LinearLayout>
 
-    <LinearLayout android:layout_height="0dp"
-        android:layout_weight="0.75" android:id="@+id/linearLayout4"
-        android:layout_width="match_parent">
-        <TextView android:id="@+id/textView1" android:text="TextView"
-            android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content"></TextView>
-    </LinearLayout>
-    <LinearLayout android:layout_height="0dp"
-        android:layout_weight="0.1" android:id="@+id/linearLayout1"
-        android:layout_width="match_parent" android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75" >
 
-        <LinearLayout android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2" android:layout_width="match_parent">
-            <TextView android:id="@+id/textView2" android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content" android:text="@string/amp"></TextView>
-            <EditText android:layout_weight="1" android:id="@+id/txtAmp"
-                android:layout_height="wrap_content" android:layout_width="wrap_content">
-                <requestFocus></requestFocus>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/posref"
+                android:textAppearance="?android:attr/textAppearanceMedium" >
+            </TextView>
+
+            <EditText
+                android:id="@+id/txtPosRef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0" >
             </EditText>
-            <TextView android:id="@+id/textView3" android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_width="wrap_content" android:text="@string/period"></TextView>
-            <EditText android:layout_weight="1" android:id="@+id/txtPeriod"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"></EditText>
         </LinearLayout>
     </LinearLayout>
 
-    <Button android:id="@+id/btnUpdate" android:layout_height="0dp"
-        android:layout_weight="0.1" android:layout_width="match_parent"
-        android:text="@string/update"
-        android:onClick="updatePlotter"></Button>
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:onClick="updatePlotter"
+        android:text="@string/update" >
+    </Button>
 
 </LinearLayout>

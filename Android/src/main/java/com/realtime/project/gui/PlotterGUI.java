@@ -10,8 +10,9 @@ import android.widget.TextView;
 public class PlotterGUI extends AbstractActivity {
 
 	public static final String SEND_TO_SERVER = "s5";
+	public static final String UPDATE_POSITION_REFERENCE = "s50";
 	
-    private TextView txtAmp, txtPeriod, txtServerState, txtBTState;
+    private TextView txtPosRef, txtServerState, txtBTState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +24,7 @@ public class PlotterGUI extends AbstractActivity {
     private void initGUI() {
         txtServerState = (TextView)findViewById(R.id.txtServerStatePlotter);
         txtBTState = (TextView)findViewById(R.id.txtBTStatePlotter);
-        txtAmp = (TextView)findViewById(R.id.txtAmp);
-        txtPeriod = (TextView)findViewById(R.id.txtPeriod);
+        txtPosRef = (TextView)findViewById(R.id.txtPosRef);
 
         super.setBtStateTextView(txtBTState);
         super.setServerTextView(txtServerState);
@@ -38,8 +38,8 @@ public class PlotterGUI extends AbstractActivity {
     }
 
     public void updatePlotter() {
-        String s = "123";
-        sendToService(SEND_TO_SERVER, s);
+        String s = txtPosRef.getText().toString();
+        sendToService(UPDATE_POSITION_REFERENCE, s);
     }
 
 }
