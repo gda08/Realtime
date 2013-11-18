@@ -7,7 +7,6 @@ import javax.microedition.io.StreamConnection;
 import se.lth.control.realtime.AnalogOut;
 import se.lth.control.realtime.IOChannelException;
 
-import SimEnvironment.AnalogSink;
 
 public class ReadCommServer extends Thread{
 	
@@ -16,11 +15,10 @@ public class ReadCommServer extends Thread{
     private InputStream inputStream;
     private double regulSignal;
 
-	public ReadCommServer(StreamConnection connection, BeamAndBall beam) {
+	public ReadCommServer(StreamConnection connection) {
         try {
 			analogOut = new AnalogOut(0);
 		} catch (IOChannelException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		mConnection = connection;

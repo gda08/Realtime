@@ -25,10 +25,9 @@ public class MainBB {
             e.printStackTrace();
             return;
         }
-		BeamAndBall bb = new BeamAndBall();
 		
-		ReadCommServer readServer = new ReadCommServer(connection, bb);
-		WriteCommServer writeServer = new WriteCommServer(connection, bb);
+		ReadCommServer readServer = new ReadCommServer(connection);
+		WriteCommServer writeServer = new WriteCommServer(connection);
 		
 		readServer.start();
 		writeServer.start();
