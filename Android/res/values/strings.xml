@@ -25,6 +25,7 @@
     <string name="update">Update</string>
     <color name="ORAGNE">#ffff8e35</color>
     <color name="GREEN">#00FF00</color>
+    <color name="BLUE">#3A01DF</color>
     <color name="RED">#FF0000</color>
     <string name="td">Td:</string>
     <string name="n">N:</string>

@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:weightSum="1" >
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp"
+        android:layout_weight="0.04" >
 
         <TextView
             android:id="@+id/textView"
@@ -16,7 +18,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/txtBTStatePi"
+            android:id="@+id/txtBTStatePid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disabled"
@@ -31,7 +33,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/txtServerStatePi"
+            android:id="@+id/txtServerStatePid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disconnected"
@@ -42,7 +44,8 @@
     <LinearLayout
         android:id="@+id/LinearLayout05"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
         android:weightSum="1" >
 
         <TextView
@@ -55,18 +58,19 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPiK"
+            android:id="@+id/txtPidK"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="1.0" >
+            android:text="-0.08" >
         </EditText>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayout05"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
         android:weightSum="1" >
 
         <TextView
@@ -79,18 +83,44 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPiTi"
+            android:id="@+id/txtPidTi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="0.0" >
+            android:text="0.1" >
         </EditText>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/LinearLayout05"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/td"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPidTd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="1.7" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
         android:weightSum="1" >
 
         <TextView
@@ -103,7 +133,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPiTr"
+            android:id="@+id/txtPidTr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -114,7 +144,33 @@
     <LinearLayout
         android:id="@+id/LinearLayout05"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/n"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/txtPidN"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="7.0" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout05"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
         android:weightSum="1" >
 
         <TextView
@@ -127,10 +183,10 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPiBeta"
+            android:id="@+id/txtPidBeta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1.0"
             android:text="1.0" >
         </EditText>
     </LinearLayout>
@@ -138,7 +194,8 @@
     <LinearLayout
         android:id="@+id/LinearLayout05"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
         android:weightSum="1" >
 
         <TextView
@@ -151,26 +208,29 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPiH"
+            android:id="@+id/txtPidH"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.34"
             android:text="0.1" >
         </EditText>
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/chckBoxPiIntegratorOn"
+        android:id="@+id/chckBoxPidIntegratorOn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
+        android:checked="false"
         android:text="@string/integratoron" >
     </CheckBox>
 
     <Button
-        android:id="@+id/btnPiUpdate"
+        android:id="@+id/btnPidUpdate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="updatePI"
+        android:layout_height="0dp"
+        android:layout_weight="0.106"
+        android:onClick="updatePID"
         android:text="@string/update" >
     </Button>
 

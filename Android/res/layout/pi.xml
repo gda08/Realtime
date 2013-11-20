@@ -16,7 +16,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/txtBTStatePid"
+            android:id="@+id/txtBTStatePi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disabled"
@@ -31,7 +31,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/txtServerStatePid"
+            android:id="@+id/txtServerStatePi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/disconnected"
@@ -55,11 +55,11 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPidK"
+            android:id="@+id/txtPiK"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="-0.1" >
+            android:text="1.1" >
         </EditText>
     </LinearLayout>
 
@@ -79,35 +79,11 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPidTi"
+            android:id="@+id/txtPiTi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="0.0" >
-        </EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayout05"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1" >
-
-        <TextView
-            android:id="@+id/TextView05"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/td"
-            android:textAppearance="?android:attr/textAppearanceLarge" >
-        </TextView>
-
-        <EditText
-            android:id="@+id/txtPidTd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="1.0" >
         </EditText>
     </LinearLayout>
 
@@ -127,35 +103,11 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPidTr"
+            android:id="@+id/txtPiTr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="10.0" >
-        </EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayout05"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1" >
-
-        <TextView
-            android:id="@+id/TextView05"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/n"
-            android:textAppearance="?android:attr/textAppearanceLarge" >
-        </TextView>
-
-        <EditText
-            android:id="@+id/txtPidN"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="10.0" >
+            android:text="12.0" >
         </EditText>
     </LinearLayout>
 
@@ -175,7 +127,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPidBeta"
+            android:id="@+id/txtPiBeta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -199,7 +151,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/txtPidH"
+            android:id="@+id/txtPiH"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -208,18 +160,17 @@
     </LinearLayout>
 
     <CheckBox
-        android:id="@+id/chckBoxPidIntegratorOn"
+        android:id="@+id/chckBoxPiIntegratorOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
         android:text="@string/integratoron" >
     </CheckBox>
 
     <Button
-        android:id="@+id/btnPidUpdate"
+        android:id="@+id/btnPiUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="updatePID"
+        android:onClick="updatePI"
         android:text="@string/update" >
     </Button>
 

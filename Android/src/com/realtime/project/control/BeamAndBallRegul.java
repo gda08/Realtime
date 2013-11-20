@@ -3,7 +3,7 @@ package com.realtime.project.control;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import android.util.Log;
+import com.realtime.project.CommService;
 
 public class BeamAndBallRegul extends Thread {
 
@@ -24,14 +24,15 @@ public class BeamAndBallRegul extends Thread {
 
 	private PID outerPIDcontroller;
 	private PI innerPIcontroller;
-	private ReferenceGenerator refGen;
 	private long starttime;
 	//private Semaphore mutex; // used for synchronization at shut-down
 	private double y, yref, u;
 
-	public BeamAndBallRegul(ReferenceGenerator ref, int pri, OutputStream outStream) {
-		this.refGen = ref;
+	private CommService commService;
+	
+	public BeamAndBallRegul(int pri, OutputStream outStream, CommService commService) {
 		this.outStream = outStream;
+		this.commService = commService;
 		outerPIDcontroller = new PID("PID");
 		innerPIcontroller= new PI("PI");
 		//mutex = new Semaphore(1);
@@ -114,7 +115,7 @@ public class BeamAndBallRegul extends Thread {
 				}
 				u = 0;
 				sendToPC(u);
-				// TODO: UPDATE PLOTTER USING yref, y and u
+				commService.updatePlotter(0, 0, 0);
 				break;
 			}
 			case MODE_BEAM: {
@@ -126,13 +127,14 @@ public class BeamAndBallRegul extends Thread {
 					sendToPC(u);
 					innerPIcontroller.updateState(u);
 				}
-				// TODO: UPDATE PLOTTER USING yref, y and u
+				commService.updatePlotter(u, y, yref);
 				break;
 			}
 			case MODE_BALL: {
 				double out1, out2 = 0;
+				y = positionIn;
 				synchronized (outerPIDcontroller) {
-					out1 = outerPIDcontroller.calculateOutput(positionIn, yref);
+					out1 = outerPIDcontroller.calculateOutput(y, yref);
 					out1 = limit(out1, MIN, MAX);
 					outerPIDcontroller.updateState(out1);
 				}
@@ -142,6 +144,7 @@ public class BeamAndBallRegul extends Thread {
 					sendToPC(out2);
 					innerPIcontroller.updateState(out2);
 				}
+				commService.updatePlotter(out2, y, yref);
 				// TODO: UPDATE PLOTTER USING yref, y and u
 				break;
 			}
@@ -150,12 +153,6 @@ public class BeamAndBallRegul extends Thread {
 				break;
 			}
 			}
-			try {
-				sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			/*
 			starttime = starttime + innerPIcontroller.getHMillis();
 			duration = starttime - System.currentTimeMillis();
 			if (duration > 0) {
@@ -164,7 +161,6 @@ public class BeamAndBallRegul extends Thread {
 				} catch (InterruptedException x) {
 				}
 			}
-			 */
 		}
 		//mutex.give();
 	}
