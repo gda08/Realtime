@@ -1,7 +1,12 @@
 package com.realtime.project.control;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import android.os.Environment;
 
 import com.realtime.project.CommService;
 
@@ -11,8 +16,8 @@ public class BeamAndBallRegul extends Thread {
 	private static final int MODE_BEAM = 1;
 	private static final int MODE_BALL = 2;
 
-	private static int MAX = 8;
-	private static int MIN = -8;
+	private static int MAX = 10;
+	private static int MIN = -10;
 
 	private double positionIn, angleIn;
 	private int priority;
@@ -41,6 +46,7 @@ public class BeamAndBallRegul extends Thread {
 		mode = MODE_OFF;
 		doRun = true;
 		y = yref = u = 0;
+		initWriters();
 	}
 
 	public synchronized void setPosition(double position) {
@@ -69,6 +75,13 @@ public class BeamAndBallRegul extends Thread {
 
 	public synchronized void setRef(double ref) {
 		yref = ref;
+		try {
+			y_out.append("----------------\n");
+			yref_out.append("----------------\n");
+			u_out.append("----------------\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public synchronized void setOFFmode() {
@@ -116,6 +129,8 @@ public class BeamAndBallRegul extends Thread {
 				u = 0;
 				sendToPC(u);
 				commService.updatePlotter(0, 0, 0);
+				if (closeWriters)
+					closeWriters();
 				break;
 			}
 			case MODE_BEAM: {
@@ -131,6 +146,7 @@ public class BeamAndBallRegul extends Thread {
 				break;
 			}
 			case MODE_BALL: {
+				closeWriters = true;
 				double out1, out2 = 0;
 				y = positionIn;
 				synchronized (outerPIDcontroller) {
@@ -145,7 +161,7 @@ public class BeamAndBallRegul extends Thread {
 					innerPIcontroller.updateState(out2);
 				}
 				commService.updatePlotter(out2, y, yref);
-				// TODO: UPDATE PLOTTER USING yref, y and u
+				write_to_file(y, yref, out2);
 				break;
 			}
 			default: {
@@ -164,6 +180,53 @@ public class BeamAndBallRegul extends Thread {
 		}
 		//mutex.give();
 	}
+	
+	private static final String APP_FILES =
+    		Environment.getExternalStorageDirectory().getPath() + "/Android/data/bb";
+    
+    private static final String Y_FILE = APP_FILES + "/y.txt";
+    private static final String YREF_FILE = APP_FILES + "/yref.txt";
+    private static final String U_FILE = APP_FILES + "/u.txt";
+    
+    private boolean closeWriters = false;
+    
+    private BufferedWriter y_out, yref_out, u_out;
+    
+    private void write_to_file(double y, double yref, double u) {
+    	try {
+			y_out.append(String.valueOf(y) + "\n");
+			yref_out.append(String.valueOf(yref) + "\n");
+			u_out.append(String.valueOf(u) + "\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private void initWriters() {
+    	try {
+			FileWriter y_stream = new FileWriter(Y_FILE);
+			FileWriter yref_stream = new FileWriter(YREF_FILE);
+			FileWriter u_stream = new FileWriter(U_FILE);
+			y_out = new BufferedWriter(y_stream);
+			yref_out = new BufferedWriter(yref_stream);
+			u_out = new BufferedWriter(u_stream);
+			y_out.append("----------------\n");
+			yref_out.append("----------------\n");
+			u_out.append("----------------\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private void closeWriters() {
+    	try {
+			y_out.close();
+			yref_out.close();
+			u_out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
 	private void sendToPC(double controlSignal) {
 		String controlSignalString = "CONTROL_SIGNAL," + controlSignal;

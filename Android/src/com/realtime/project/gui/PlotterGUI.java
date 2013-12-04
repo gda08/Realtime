@@ -1,7 +1,5 @@
 package com.realtime.project.gui;
 
-import com.realtime.project.R;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.realtime.project.R;
 
 public class PlotterGUI extends AbstractActivity {
 
@@ -67,6 +67,11 @@ public class PlotterGUI extends AbstractActivity {
             @Override
             public void onClick(View view) {
                 updateReferencePosition();
+                if (!switchRef) {
+                	Thread t = new Thread(refs);
+                	t.start();
+                	switchRef = true;
+                }
             }
         });        
     }
@@ -74,7 +79,33 @@ public class PlotterGUI extends AbstractActivity {
     private void updateReferencePosition() {
         String s = txtPosRef.getText().toString();
         sendToService(UPDATE_POSITION_REFERENCE, s);
+        ref = Integer.parseInt(s);
     }
+    
+    private boolean switchRef = false;
+    int ref = 0;
+    
+    private Runnable refs = new Runnable() {
+		@Override
+		public void run() {
+			while (true) {
+				if (switchRef) {
+					txtPosRef.post(new Runnable() {
+						@Override
+						public void run() {
+							ref *= -1;
+							sendToService(UPDATE_POSITION_REFERENCE, String.valueOf(ref));
+						}
+					});
+					try {
+						Thread.sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	};
     
     private BroadcastReceiver myReceiverX;
     private static final String UPDATE_PLOTTER = "s551";

@@ -35,6 +35,7 @@ public class PIDParamsGUI extends AbstractActivity {
         txtBeta = (TextView)findViewById(R.id.txtPidBeta);
         txtH = (TextView)findViewById(R.id.txtPidH);
         boxIntegratorOn = (CheckBox)findViewById(R.id.chckBoxPidIntegratorOn);
+        boxIntegratorOn.setChecked(true);
         
         super.setBtStateTextView(txtBTState);
         super.setServerTextView(txtServerState);

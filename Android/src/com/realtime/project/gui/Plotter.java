@@ -52,7 +52,7 @@ public class Plotter extends View {
 		yref.add(p);
 	}
 	
-	public synchronized List<PointF> moveXcoordinates(List<PointF> l) {
+	private synchronized List<PointF> moveXcoordinates(List<PointF> l) {
 		List<PointF> newList = new ArrayList<PointF>();
 		l.remove(0);
 		for (PointF p : l) {

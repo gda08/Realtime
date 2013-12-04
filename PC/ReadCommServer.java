@@ -48,6 +48,8 @@ public class ReadCommServer extends Thread{
 							regulSignal = Double.parseDouble(value);
 						} catch (Exception e) {
 							regulSignal = 0;
+							inputStream.close();
+							System.out.println("Connection with device was lost");
 						}
 					}
 				}

@@ -22,9 +22,9 @@ public class PID {
 		p.Beta = 1.0;
 		p.H = 0.1;
 		p.K = -0.08;
-		p.Ti = 0.1;
+		p.Ti = 10;
 		p.Tr = 10.0;
-		p.integratorOn = false;
+		p.integratorOn = true;
 		this.e = 0;
 		this.I = 0;
 		p.N = 7;

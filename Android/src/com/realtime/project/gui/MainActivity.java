@@ -1,5 +1,8 @@
 package com.realtime.project.gui;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.realtime.project.R;
 
 import android.app.TabActivity;
@@ -8,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -54,8 +58,34 @@ public class MainActivity extends TabActivity {
         tabHost.setCurrentTab(0);   // calls onCreate() of the plotter activity
 
         registerReceiver();
+        
+        initWriter();
 
     }
+    
+    private static final String APP_FILES =
+    		Environment.getExternalStorageDirectory().getPath() + "/Android/data/bb";
+    
+    private static final String Y_FILE = APP_FILES + "/y.txt";
+    private static final String YREF_FILE = APP_FILES + "/yref.txt";
+    private static final String U_FILE = APP_FILES + "/u.txt";
+	
+	private void initWriter() {
+		File f = new File(APP_FILES);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+		File y_file = new File(Y_FILE);
+		File yref_file = new File(YREF_FILE);
+		File u_file = new File(U_FILE);
+		try {
+			y_file.createNewFile();
+			yref_file.createNewFile();
+			u_file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
     @Override
     protected void onDestroy() {

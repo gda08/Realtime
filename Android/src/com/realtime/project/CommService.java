@@ -15,6 +15,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.realtime.project.control.BeamAndBallRegul;
 import com.realtime.project.control.PIDParameters;
@@ -189,7 +190,11 @@ public class CommService extends Service {
 			if (regul!=null) regul.setBEAMmode();
 		} else if (action.equals(UPDATE_POSITION_REFERENCE)) {
 			String ref = intent.getStringExtra(UPDATE_POSITION_REFERENCE);
-			regul.setRef(Double.parseDouble(ref));
+			try {
+				regul.setRef(Double.parseDouble(ref));
+			} catch (Exception e) {
+				Log.d("hani", ref + "****");
+			}
 		}
 		return Service.START_NOT_STICKY;
 	}
@@ -374,7 +379,7 @@ public class CommService extends Service {
 			 bluetoothAdapter.cancelDiscovery();
 			 try {
 				 // This is a blocking call and will only return on a
-						 // successful connection or an exception
+				 // successful connection or an exception
 				 mmSocket.connect();
 			 } catch (IOException e) {
 				 try {
